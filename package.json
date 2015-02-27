@@ -16,6 +16,7 @@
     "javascript"
   ],
   "dependencies": {
-    "broccoli-filter": "^0.1.6"
+    "broccoli-filter": "^0.1.6",
+    "rsvp": "^3.0.16"
   }
 }

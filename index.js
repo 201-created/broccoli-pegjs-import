@@ -1,5 +1,6 @@
 var Filter = require('broccoli-filter');
 var fs = require('fs');
+var Promise = require('rsvp').Promise;
 
 module.exports = PegFilter;
 PegFilter.prototype = Object.create(Filter.prototype);
@@ -29,15 +30,15 @@ PegFilter.prototype.extensions = ['pegjs'];
 PegFilter.prototype.targetExtension = 'js';
 
 PegFilter.prototype.processFile = function (srcDir, destDir, relativePath) {
-  var self = this
-  var inputEncoding = (this.inputEncoding === undefined) ? 'utf8' : this.inputEncoding
-  var outputEncoding = (this.outputEncoding === undefined) ? 'utf8' : this.outputEncoding
+  var self = this;
+  var inputEncoding = (this.inputEncoding === undefined) ? 'utf8' : this.inputEncoding;
+  var outputEncoding = (this.outputEncoding === undefined) ? 'utf8' : this.outputEncoding;
   var parser = this.peg.buildParser(srcDir + '/' + relativePath, this.options);
-  var src = fs.readFileSync(srcDir + '/' + relativePath, { encoding: inputEncoding })
+  var src = fs.readFileSync(srcDir + '/' + relativePath, { encoding: inputEncoding });
   var output = this.options.wrapper(src, parser);
   return Promise.resolve(output)
     .then(function (outputString) {
-      var outputPath = self.getDestFilePath(relativePath)
-      fs.writeFileSync(destDir + '/' + outputPath, outputString, { encoding: outputEncoding })
+      var outputPath = self.getDestFilePath(relativePath);
+      fs.writeFileSync(destDir + '/' + outputPath, outputString, { encoding: outputEncoding });
     });
 }

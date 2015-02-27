@@ -1,7 +1,7 @@
 {
   "name": "broccoli-pegjs-import",
   "description": "PEG.js filter for Broccoli",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "author": "Matthew Beale <matt.beale@madhatted.com>",
   "main": "index.js",
   "license": "MIT",

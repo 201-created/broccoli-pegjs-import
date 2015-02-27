@@ -1,18 +1,24 @@
 # broccoli-pegjs
 
-A [PEG.js](http://pegjs.org/) filter for [Broccoli](http://broccolijs.com/).
+Forked from [broccoli-pegjs](https://github.com/ghempton/broccoli-pegjs).
+
+A [PEG.js](http://pegjs.org/) filter for [Broccoli](http://broccolijs.com/) that
+uses [pegjs-import](https://github.com/casetext/pegjs-import).
 
 ## Installation
 
 ```bash
-npm install --save-dev broccoli-pegjs
+npm install --save-dev broccoli-pegjs-import
 ```
 
 ## Usage
 
 ```js
-var peg = require('broccoli-pegjs');
-tree = peg(tree, options);
+var peg = require('pegjs-import');
+var pegBuilder = require('broccoli-pegjs-import');
+tree = pegBuilder(tree, {
+  peg: peg
+});
 ```
 
 ## Options
@@ -20,17 +26,17 @@ tree = peg(tree, options);
 * `wrapper` - Wrap the generated parser in any code you want:
 
 ```
-tree = peg(tree, {
+tree = pegBuilder(tree, {
   wrapper: function (src, parser) {
     return 'var Parser = ' + parser + ";\nvar parse = Parser.parse, SyntaxError = Parser.SyntaxError;\nexport {SyntaxError, parse};\nexport default parse;";
   }
 });
 ```
 
-* `peg` - Provide an alternative peg instance (for example [pegjs-import](https://github.com/casetext/pegjs-import)):
+* `peg` - Provide an alternative peg instance.
 
 ```
-tree = peg(tree, {
+tree = pegBuilder(tree, {
   peg: require('pegjs-import')
 });
 ```
